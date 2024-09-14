@@ -284,3 +284,6 @@ required-features = ["deflate", "stream"]
 name = "multipart"
 path = "tests/multipart.rs"
 required-features = ["multipart"]
+
+[patch.crates-io]
+hyper-util = { git = "http://github.com/pubky/hyper-util", branch= "dev" }
