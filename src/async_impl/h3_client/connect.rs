@@ -60,7 +60,12 @@ impl H3Connector {
         } else {
             let addrs = resolve(&mut self.resolver, Name::from_str(host)?).await?;
             let addrs = addrs.map(|mut addr| {
-                addr.set_port(port);
+                // Respect explicit ports in the URI,
+                // and non `0` ports resolved from a custom dns resolver.
+                if dest.port().is_some() || addr.port() == 0 {
+                    addr.set_port(port)
+                };
+
                 addr
             });
             addrs.collect()
